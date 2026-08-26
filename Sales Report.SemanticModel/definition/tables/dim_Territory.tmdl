@@ -1,0 +1,52 @@
+table dim_Territory
+	lineageTag: 892c4eaf-13f8-40d3-b3e7-f9c0d62c3ee2
+
+	column 'Territory Key'
+		dataType: int64
+		formatString: 0
+		lineageTag: 55389e23-e29e-45fa-b9ed-4778b0ca49ad
+		summarizeBy: none
+		sourceColumn: Territory Key
+
+		annotation SummarizationSetBy = Automatic
+
+	column Region
+		dataType: string
+		lineageTag: 17deb17a-c114-40d1-9130-4f611e407f92
+		summarizeBy: none
+		sourceColumn: Region
+
+		annotation SummarizationSetBy = Automatic
+
+	column Country
+		dataType: string
+		lineageTag: 6988f4cf-6a7b-485d-a6c3-b6357145e8cc
+		dataCategory: Country
+		summarizeBy: none
+		sourceColumn: Country
+
+		annotation SummarizationSetBy = Automatic
+
+	column Group
+		dataType: string
+		lineageTag: eb121c98-b9fc-457b-b715-9f82ac49cfce
+		summarizeBy: none
+		sourceColumn: Group
+
+		annotation SummarizationSetBy = Automatic
+
+	partition dim_Territory-386d9e49-2878-4b9b-910f-885957a75084 = m
+		mode: import
+		source =
+				let
+				    Source = Excel.Workbook(Web.Contents("https://ibm-my.sharepoint.com/personal/rideb184_in_ibm_com/Documents/Desktop/Work%20In%20Progress/14.%20Service%20Line/Book-760/Sample%20Data/Adventure%20Works%202020.xlsx"), null, true),
+				    Territory_Sheet = Source{[Item="Territory",Kind="Sheet"]}[Data],
+				    #"Promoted Headers" = Table.PromoteHeaders(Territory_Sheet, [PromoteAllScalars=true]),
+				    #"Changed Type" = Table.TransformColumnTypes(#"Promoted Headers",{{"Territory Key", Int64.Type}, {"Region", type text}, {"Country", type text}, {"Group", type text}})
+				in
+				    #"Changed Type"
+
+	annotation PBI_ResultType = Exception
+
+	annotation PBI_NavigationStepName = Navigation
+

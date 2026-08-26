@@ -1,0 +1,53 @@
+table dim_BudgetPeriod
+	lineageTag: d484ab98-8e7a-40b6-850d-3dd5a42c0f00
+
+	column CalendarYear
+		dataType: int64
+		formatString: 0
+		lineageTag: 74c179cb-d2df-4f2f-85ba-90b6c41450f1
+		summarizeBy: none
+		sourceColumn: CalendarYear
+
+		annotation SummarizationSetBy = Automatic
+
+	column MonthName
+		dataType: string
+		lineageTag: f3cca738-2848-4b21-81e8-99299245c4de
+		summarizeBy: none
+		sourceColumn: MonthName
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Month Number'
+		dataType: int64
+		formatString: 0
+		lineageTag: 0802bba3-aae2-495b-9628-03c0af9532f7
+		summarizeBy: none
+		sourceColumn: Month Number
+
+		annotation SummarizationSetBy = Automatic
+
+	column Period
+		dataType: int64
+		formatString: 0
+		lineageTag: 619cbd28-e50b-4bd6-b5d6-bd3a7eb0408f
+		summarizeBy: none
+		sourceColumn: Period
+
+		annotation SummarizationSetBy = Automatic
+
+	partition dim_BudgetPeriod-36cdc029-2df0-4046-a766-c2d5668356ab = m
+		mode: import
+		source =
+				let
+				    Source = Excel.Workbook(Web.Contents("https://ibm-my.sharepoint.com/personal/rideb184_in_ibm_com/Documents/Desktop/Work%20In%20Progress/14.%20Service%20Line/Book-760/Sample%20Data/Adventure%20Works%202020.xlsx"), null, true),
+				    BudgetPeriod_Sheet = Source{[Item="BudgetPeriod",Kind="Sheet"]}[Data],
+				    #"Promoted Headers" = Table.PromoteHeaders(BudgetPeriod_Sheet, [PromoteAllScalars=true]),
+				    #"Changed Type" = Table.TransformColumnTypes(#"Promoted Headers",{{"CalendarYear", Int64.Type}, {"MonthName", type text}, {"Month Number", Int64.Type}, {"Period", Int64.Type}})
+				in
+				    #"Changed Type"
+
+	annotation PBI_ResultType = Table
+
+	annotation PBI_NavigationStepName = Navigation
+

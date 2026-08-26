@@ -1,0 +1,28 @@
+model Model
+	culture: en-US
+	defaultPowerBIDataSourceVersion: powerBI_V3
+	sourceQueryCulture: en-IN
+	dataAccessOptions
+		legacyRedirects
+		returnErrorValuesAsNull
+
+annotation __PBI_TimeIntelligenceEnabled = 0
+
+annotation PBI_QueryOrder = ["Budget","dim_BudgetPeriod","dim_Calendar","dim_Customers","dimProductCategory","dimProductSubCategory","dim_Products","fact_Sales","dim_Territory","MeasureTable","Year(Env)"]
+
+annotation PBI_ProTooling = ["DevMode"]
+
+annotation __PBI_ServiceStoredInTmdl = reserved
+
+ref table dim_BudgetPeriod
+ref table dim_Calendar
+ref table dim_Customers
+ref table dim_Products
+ref table fact_Sales
+ref table dim_Territory
+ref table MeasureTable
+
+ref role 'US Users'
+
+ref cultureInfo en-US
+
