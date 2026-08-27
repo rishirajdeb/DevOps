@@ -1,7 +1,7 @@
 table MeasureTable
 	lineageTag: 600bc5d3-3edc-4da2-8824-e1441eaf611a
 
-	measure 'Total Sales' = SUM(fact_Sales[SalesAmount])
+	measure 'Total Sales' = SUM(fact_Sales[SalesAmount]) * 2
 		lineageTag: eaea8d75-0f85-47f9-89df-deccbb99edbb
 
 		annotation PBI_FormatHint = {"isGeneralNumber":true}
