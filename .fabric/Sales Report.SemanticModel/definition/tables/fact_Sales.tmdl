@@ -1,0 +1,217 @@
+table fact_Sales
+	lineageTag: 916a0927-9a28-47e1-89c9-0587516b0f13
+
+	column OrderDate
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: 5f301f34-23d7-41b9-9137-447f324c7548
+		summarizeBy: none
+		sourceColumn: OrderDate
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column 'OrderDate Key'
+		dataType: int64
+		formatString: 0
+		lineageTag: 1c9bcf1d-0664-4cfe-99b2-2e0925f98ad4
+		summarizeBy: count
+		sourceColumn: OrderDate Key
+
+		annotation SummarizationSetBy = Automatic
+
+	column ProductKey
+		dataType: int64
+		formatString: 0
+		lineageTag: 9debacda-c406-4ac3-99db-696540617e12
+		summarizeBy: none
+		sourceColumn: ProductKey
+
+		annotation SummarizationSetBy = Automatic
+
+	column CustomerKey
+		dataType: int64
+		formatString: 0
+		lineageTag: 66e138fe-e7ce-4bf8-9792-dd7374f9a64e
+		summarizeBy: none
+		sourceColumn: CustomerKey
+
+		annotation SummarizationSetBy = Automatic
+
+	column SalesTerritoryKey
+		dataType: int64
+		formatString: 0
+		lineageTag: b010c985-b321-4193-81a7-9eef6c68ea43
+		summarizeBy: none
+		sourceColumn: SalesTerritoryKey
+
+		annotation SummarizationSetBy = Automatic
+
+	column SalesOrderNumber
+		dataType: string
+		lineageTag: dc744931-6333-49b5-9ecf-e99d3bf58f5f
+		summarizeBy: none
+		sourceColumn: SalesOrderNumber
+
+		annotation SummarizationSetBy = Automatic
+
+	column ShipDate
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: 554c0d32-50f9-4f3c-abbe-b43813c2d85a
+		summarizeBy: none
+		sourceColumn: ShipDate
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column SalesOrderLineNumber
+		dataType: int64
+		formatString: 0
+		lineageTag: 9df33f09-b928-4b9a-9d9b-5328c51fb83a
+		summarizeBy: sum
+		sourceColumn: SalesOrderLineNumber
+
+		annotation SummarizationSetBy = Automatic
+
+	column OrderQuantity
+		dataType: int64
+		formatString: 0
+		lineageTag: 94ccd1d3-453d-40d3-9f24-9855c1d95164
+		summarizeBy: sum
+		sourceColumn: OrderQuantity
+
+		annotation SummarizationSetBy = Automatic
+
+	column UnitPrice
+		dataType: double
+		lineageTag: d0739582-474a-4fe0-98e4-78c2b54f0731
+		summarizeBy: sum
+		sourceColumn: UnitPrice
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column ExtendedAmount
+		dataType: double
+		lineageTag: bfbd6d2f-6e16-45ce-91c1-9f0272668844
+		summarizeBy: sum
+		sourceColumn: ExtendedAmount
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column UnitPriceDiscountPct
+		dataType: int64
+		formatString: 0
+		lineageTag: 417d3017-e376-4700-889f-ff5dff4c55dd
+		summarizeBy: sum
+		sourceColumn: UnitPriceDiscountPct
+
+		annotation SummarizationSetBy = Automatic
+
+	column DiscountAmount
+		dataType: int64
+		formatString: 0
+		lineageTag: 8eb7a5ff-dcc8-4144-86dd-991b056905a7
+		summarizeBy: sum
+		sourceColumn: DiscountAmount
+
+		annotation SummarizationSetBy = Automatic
+
+	column ProductStandardCost
+		dataType: double
+		lineageTag: 34e2f74e-3ea0-43ef-941f-e97e11e75490
+		summarizeBy: sum
+		sourceColumn: ProductStandardCost
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column TotalProductCost
+		dataType: double
+		lineageTag: d561321a-cbd5-48b5-a65a-9f480852b651
+		summarizeBy: sum
+		sourceColumn: TotalProductCost
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column SalesAmount
+		dataType: double
+		lineageTag: b93dc99c-46c8-4a3f-8617-3c1b22b02190
+		summarizeBy: sum
+		sourceColumn: SalesAmount
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column TaxAmt
+		dataType: double
+		lineageTag: 66faaa8a-a220-47ea-bd27-563e31adcfe6
+		summarizeBy: sum
+		sourceColumn: TaxAmt
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column Freight
+		dataType: double
+		lineageTag: ce3c8b3c-c7f2-48ae-8cd0-5dd714decd67
+		summarizeBy: sum
+		sourceColumn: Freight
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column RegionMonthID
+		dataType: string
+		lineageTag: 42d5fe37-df2b-4de5-816b-81268dd8fc55
+		summarizeBy: none
+		sourceColumn: RegionMonthID
+
+		annotation SummarizationSetBy = Automatic
+
+	column BudgetKey = LEFT(fact_Sales[OrderDate Key],6)
+		lineageTag: c480a2b8-2265-45d1-be50-feb80b161bf0
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	column Year
+		dataType: int64
+		formatString: 0
+		lineageTag: e660f898-6765-4067-a2c0-831731f6b101
+		summarizeBy: sum
+		sourceColumn: Year
+
+		annotation SummarizationSetBy = Automatic
+
+	partition fact_Sales-6c3d85ce-87da-4f09-8c54-3688d4df4936 = m
+		mode: import
+		source =
+				let
+				    Source = Excel.Workbook(Web.Contents("https://ibm-my.sharepoint.com/personal/rideb184_in_ibm_com/Documents/Desktop/Work%20In%20Progress/14.%20Service%20Line/Book-760/Sample%20Data/Adventure%20Works%202020.xlsx"), null, true),
+				    Sales_Sheet = Source{[Item="Sales",Kind="Sheet"]}[Data],
+				    #"Promoted Headers" = Table.PromoteHeaders(Sales_Sheet, [PromoteAllScalars=true]),
+				    #"Changed Type" = Table.TransformColumnTypes(#"Promoted Headers",{{"OrderDate", type date}, {"OrderDate Key", Int64.Type}, {"ProductKey", Int64.Type}, {"CustomerKey", Int64.Type}, {"SalesTerritoryKey", Int64.Type}, {"SalesOrderNumber", type text}, {"ShipDate", type date}, {"SalesOrderLineNumber", Int64.Type}, {"OrderQuantity", Int64.Type}, {"UnitPrice", type number}, {"ExtendedAmount", type number}, {"UnitPriceDiscountPct", Int64.Type}, {"DiscountAmount", Int64.Type}, {"ProductStandardCost", type number}, {"TotalProductCost", type number}, {"SalesAmount", type number}, {"TaxAmt", type number}, {"Freight", type number}, {"RegionMonthID", type text}}),
+				    #"Added Custom" = Table.AddColumn(#"Changed Type", "Year", each Date.Year([OrderDate])),
+				    #"Changed Type1" = Table.TransformColumnTypes(#"Added Custom",{{"Year", type text}}),
+				    #"Filtered Rows" = Table.SelectRows(#"Changed Type1", each [Year] = #"Year(Env)"),
+				    #"Changed Type2" = Table.TransformColumnTypes(#"Filtered Rows",{{"Year", Int64.Type}})
+				in
+				    #"Changed Type2"
+
+	annotation PBI_ResultType = Table
+
+	annotation PBI_NavigationStepName = Navigation
+

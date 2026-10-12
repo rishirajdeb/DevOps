@@ -1,0 +1,44 @@
+table MeasureTable
+	lineageTag: 600bc5d3-3edc-4da2-8824-e1441eaf611a
+
+	measure 'Total Sales' = SUM(fact_Sales[SalesAmount])
+		lineageTag: eaea8d75-0f85-47f9-89df-deccbb99edbb
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'YTD Sales' = TOTALYTD([Total Sales],dim_Calendar[Date])
+		lineageTag: e361d855-4f11-4890-b0f8-ed7f51f5daba
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Same Period Last Year Sales' = CALCULATE([Total Sales],SAMEPERIODLASTYEAR(dim_Calendar[Date]))
+		lineageTag: c54d715b-a18b-4883-b983-74f504ac95ad
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'YoY Growth%' = DIVIDE([Total Sales]-[Same Period Last Year Sales],[Same Period Last Year Sales])
+		formatString: 0.00%;-0.00%;0.00%
+		lineageTag: 2a83d518-b446-4826-8bac-0b988f65f564
+
+		changedProperty = FormatString
+
+	measure Label = ```
+			
+			VAR _year = AVERAGE(fact_Sales[Year])
+			RETURN
+			"Sales Transaction Details (" & _year & ")" 
+			```
+		lineageTag: a70c8106-9ec5-4711-a442-f2105917ce59
+
+	partition MeasureTable-42cffd3a-144e-44c3-be8c-bfd4abc06f30 = m
+		mode: import
+		source =
+				let
+				    Source = Table.FromRows(Json.Document(Binary.Decompress(Binary.FromText("i44FAA==", BinaryEncoding.Base64), Compression.Deflate)), let _t = ((type nullable text) meta [Serialized.Text = true]) in type table [Column1 = _t]),
+				    #"Changed Type" = Table.TransformColumnTypes(Source,{{"Column1", type text}}),
+				    #"Removed Columns" = Table.RemoveColumns(#"Changed Type",{"Column1"})
+				in
+				    #"Removed Columns"
+
+	annotation PBI_ResultType = Table
+

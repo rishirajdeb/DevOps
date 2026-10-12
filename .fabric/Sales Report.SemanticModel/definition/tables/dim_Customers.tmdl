@@ -1,0 +1,148 @@
+table dim_Customers
+	lineageTag: 07bab4c5-080e-44df-bd0f-dac66b128e06
+
+	column CustomerKey
+		dataType: int64
+		formatString: 0
+		lineageTag: aa695f21-15fa-4485-a970-1beb6104ad6b
+		summarizeBy: none
+		sourceColumn: CustomerKey
+
+		annotation SummarizationSetBy = Automatic
+
+	column GeographyKey
+		dataType: int64
+		formatString: 0
+		lineageTag: 0f17893c-5bdd-43ae-b153-47b56b01e26f
+		summarizeBy: none
+		sourceColumn: GeographyKey
+
+		annotation SummarizationSetBy = Automatic
+
+	column Name
+		dataType: string
+		lineageTag: 7a4c7a35-69f5-4a5e-9b16-9d8d564dac7d
+		summarizeBy: none
+		sourceColumn: Name
+
+		annotation SummarizationSetBy = Automatic
+
+	column BirthDate
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: 32361ac5-2a2e-4f8f-8dfb-2bf96b4f9321
+		summarizeBy: none
+		sourceColumn: BirthDate
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column MaritalStatus
+		dataType: string
+		lineageTag: 85759074-478c-4e39-a5e0-9c83f11643b4
+		summarizeBy: none
+		sourceColumn: MaritalStatus
+
+		annotation SummarizationSetBy = Automatic
+
+	column Gender
+		dataType: string
+		lineageTag: 9a49e578-e1cc-4acf-b5c5-7578c95c7986
+		summarizeBy: none
+		sourceColumn: Gender
+
+		annotation SummarizationSetBy = Automatic
+
+	column YearlyIncome
+		dataType: int64
+		formatString: 0
+		lineageTag: 0cd62a4e-876d-4b64-8334-13147dcbe560
+		summarizeBy: none
+		sourceColumn: YearlyIncome
+
+		annotation SummarizationSetBy = Automatic
+
+	column NumberChildrenAtHome
+		dataType: int64
+		formatString: 0
+		lineageTag: 1075e3b8-a266-43d1-89fb-c143b813b157
+		summarizeBy: none
+		sourceColumn: NumberChildrenAtHome
+
+		annotation SummarizationSetBy = Automatic
+
+	column Occupation
+		dataType: string
+		lineageTag: 4748ac1d-efd1-4544-992e-bd18031c0f5f
+		summarizeBy: none
+		sourceColumn: Occupation
+
+		annotation SummarizationSetBy = Automatic
+
+	column HouseOwnerFlag
+		dataType: int64
+		formatString: 0
+		lineageTag: dc25ed41-9bd4-4980-9cf7-a7ac191aae9d
+		summarizeBy: none
+		sourceColumn: HouseOwnerFlag
+
+		annotation SummarizationSetBy = Automatic
+
+	column NumberCarsOwned
+		dataType: int64
+		formatString: 0
+		lineageTag: e9426e77-7ec1-4f49-add9-f66d79ef25b6
+		summarizeBy: none
+		sourceColumn: NumberCarsOwned
+
+		annotation SummarizationSetBy = Automatic
+
+	column AddressLine1
+		dataType: string
+		lineageTag: 15724ab2-fe46-477c-b4b5-a7a2f0ade330
+		summarizeBy: none
+		sourceColumn: AddressLine1
+
+		annotation SummarizationSetBy = Automatic
+
+	column AddressLine2
+		dataType: string
+		lineageTag: 80bced26-13b3-4313-a8b3-c112b55ef543
+		summarizeBy: none
+		sourceColumn: AddressLine2
+
+		annotation SummarizationSetBy = Automatic
+
+	column Phone
+		dataType: string
+		lineageTag: e0d4855b-30d0-4d1c-89dc-0dd5da285f33
+		summarizeBy: none
+		sourceColumn: Phone
+
+		annotation SummarizationSetBy = Automatic
+
+	column DateFirstPurchase
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: b95b88ef-45b4-4d04-8361-539c12a34651
+		summarizeBy: none
+		sourceColumn: DateFirstPurchase
+
+		annotation SummarizationSetBy = Automatic
+
+	partition dim_Customers-4170e306-cf50-40ec-a165-c8d9b64365a5 = m
+		mode: import
+		source =
+				let
+				    Source = Excel.Workbook(Web.Contents("https://ibm-my.sharepoint.com/personal/rideb184_in_ibm_com/Documents/Desktop/Work%20In%20Progress/14.%20Service%20Line/Book-760/Sample%20Data/Adventure%20Works%202020.xlsx"), null, true),
+				    Customers_Sheet = Source{[Item="Customers",Kind="Sheet"]}[Data],
+				    #"Promoted Headers" = Table.PromoteHeaders(Customers_Sheet, [PromoteAllScalars=true]),
+				    #"Changed Type" = Table.TransformColumnTypes(#"Promoted Headers",{{"CustomerKey", Int64.Type}, {"GeographyKey", Int64.Type}, {"Name", type text}, {"BirthDate", type date}, {"MaritalStatus", type text}, {"Gender", type text}, {"YearlyIncome", Int64.Type}, {"NumberChildrenAtHome", Int64.Type}, {"Occupation", type text}, {"HouseOwnerFlag", Int64.Type}, {"NumberCarsOwned", Int64.Type}, {"AddressLine1", type text}, {"AddressLine2", type text}, {"Phone", type text}, {"DateFirstPurchase", type datetime}})
+				in
+				    #"Changed Type"
+
+	annotation PBI_ResultType = Table
+
+	annotation PBI_NavigationStepName = Navigation
+

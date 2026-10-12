@@ -1,0 +1,20 @@
+relationship 5da3e598-c057-4fe9-b043-28d91585c801
+	fromColumn: fact_Sales.OrderDate
+	toColumn: dim_Calendar.Date
+
+relationship 84f927f8-5044-43eb-90bf-be7a475cf31d
+	fromColumn: fact_Sales.CustomerKey
+	toColumn: dim_Customers.CustomerKey
+
+relationship 5e09ecc8-25ef-4e22-93fd-49f26905ccee
+	fromColumn: fact_Sales.ProductKey
+	toColumn: dim_Products.ProductKey
+
+relationship 067bd60d-82f5-4e47-84c3-b0aa44e83d27
+	fromColumn: fact_Sales.SalesTerritoryKey
+	toColumn: dim_Territory.'Territory Key'
+
+relationship be299575-72fb-45e0-9f30-91e6e37e9be7
+	fromColumn: fact_Sales.BudgetKey
+	toColumn: dim_BudgetPeriod.Period
+

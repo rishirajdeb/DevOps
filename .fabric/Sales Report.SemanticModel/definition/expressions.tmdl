@@ -1,0 +1,49 @@
+expression Budget =
+		let
+		    Source = Excel.Workbook(Web.Contents("https://ibm-my.sharepoint.com/personal/rideb184_in_ibm_com/Documents/Desktop/Work%20In%20Progress/14.%20Service%20Line/Book-760/Sample%20Data/Adventure%20Works%202020.xlsx"), null, true),
+		    Budget_Sheet = Source{[Item="Budget",Kind="Sheet"]}[Data],
+		    #"Promoted Headers" = Table.PromoteHeaders(Budget_Sheet, [PromoteAllScalars=true]),
+		    #"Changed Type" = Table.TransformColumnTypes(#"Promoted Headers",{{"Category", type text}, {"Budget", Int64.Type}, {"Period", Int64.Type}})
+		in
+		    #"Changed Type"
+	lineageTag: e87cca6b-ba0e-46e9-b937-7a202d1b13f7
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+
+expression dimProductCategory =
+		let
+		    Source = Excel.Workbook(Web.Contents("https://ibm-my.sharepoint.com/personal/rideb184_in_ibm_com/Documents/Desktop/Work%20In%20Progress/14.%20Service%20Line/Book-760/Sample%20Data/Adventure%20Works%202020.xlsx"), null, true),
+		    dimProductCategory_Sheet = Source{[Item="dimProductCategory",Kind="Sheet"]}[Data],
+		    #"Promoted Headers" = Table.PromoteHeaders(dimProductCategory_Sheet, [PromoteAllScalars=true]),
+		    #"Changed Type" = Table.TransformColumnTypes(#"Promoted Headers",{{"ProductCategoryKey", Int64.Type}, {"ProductCategoryAlternateKey", Int64.Type}, {"EnglishProductCategoryName", type text}, {"SpanishProductCategoryName", type text}, {"FrenchProductCategoryName", type text}})
+		in
+		    #"Changed Type"
+	lineageTag: 03f88f55-47b0-4626-9c3f-f56d28016dcc
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+
+expression dimProductSubCategory =
+		let
+		    Source = Excel.Workbook(Web.Contents("https://ibm-my.sharepoint.com/personal/rideb184_in_ibm_com/Documents/Desktop/Work%20In%20Progress/14.%20Service%20Line/Book-760/Sample%20Data/Adventure%20Works%202020.xlsx"), null, true),
+		    dimProductSubCategory_Sheet = Source{[Item="dimProductSubCategory",Kind="Sheet"]}[Data],
+		    #"Promoted Headers" = Table.PromoteHeaders(dimProductSubCategory_Sheet, [PromoteAllScalars=true]),
+		    #"Changed Type" = Table.TransformColumnTypes(#"Promoted Headers",{{"ProductSubcategoryKey", Int64.Type}, {"ProductSubcategoryAlternateKey", Int64.Type}, {"EnglishProductSubcategoryName", type text}, {"SpanishProductSubcategoryName", type text}, {"FrenchProductSubcategoryName", type text}, {"ProductCategoryKey", Int64.Type}})
+		in
+		    #"Changed Type"
+	lineageTag: 1ea695bf-86a6-4b8d-8f59-41823dfe24ac
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+
+expression Year(Env) = "2016" meta [IsParameterQuery=true, List={"2016", "2017", "2018"}, DefaultValue="2016", Type="Text", IsParameterQueryRequired=true]
+	lineageTag: 0aa30c03-8542-4607-8955-3fdba41106ce
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Text
+

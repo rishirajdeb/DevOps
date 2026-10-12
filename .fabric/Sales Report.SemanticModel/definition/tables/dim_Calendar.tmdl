@@ -1,0 +1,139 @@
+table dim_Calendar
+	lineageTag: 896437c5-22ad-4401-bead-9ff3dd49b9dc
+
+	column ID
+		dataType: int64
+		formatString: 0
+		lineageTag: 0dd0bf85-b95f-4055-980d-b4b9bae16095
+		summarizeBy: none
+		sourceColumn: ID
+
+		annotation SummarizationSetBy = Automatic
+
+	column Date
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: 5195465e-7d0a-4c16-8e9b-cc08aa827eaf
+		summarizeBy: none
+		sourceColumn: Date
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column DayNumberOfWeek
+		dataType: int64
+		formatString: 0
+		lineageTag: 902cb6de-41f4-4740-9e1f-fb37b2686775
+		summarizeBy: none
+		sourceColumn: DayNumberOfWeek
+
+		annotation SummarizationSetBy = Automatic
+
+	column DayName
+		dataType: string
+		lineageTag: c46f052d-f04c-42e9-a57c-2723dadc6e0f
+		summarizeBy: none
+		sourceColumn: DayName
+
+		annotation SummarizationSetBy = Automatic
+
+	column MonthName
+		dataType: string
+		lineageTag: 89fd2114-5857-4c09-8bd2-2414c63d12b9
+		summarizeBy: none
+		sourceColumn: MonthName
+		sortByColumn: MonthNumberOfYear
+
+		changedProperty = SortByColumn
+
+		annotation SummarizationSetBy = Automatic
+
+	column MonthNumberOfYear
+		dataType: int64
+		formatString: 0
+		lineageTag: 62076409-2088-4ed5-af12-f82cd83603ec
+		summarizeBy: none
+		sourceColumn: MonthNumberOfYear
+
+		annotation SummarizationSetBy = Automatic
+
+	column WeekNumberOfYear
+		dataType: int64
+		formatString: 0
+		lineageTag: cea534fa-1202-4b52-a6d2-42bbc328c595
+		summarizeBy: none
+		sourceColumn: WeekNumberOfYear
+
+		annotation SummarizationSetBy = Automatic
+
+	column CalendarQuarter
+		dataType: int64
+		formatString: 0
+		lineageTag: 688d09d9-5554-46c3-b8ac-aedee067862a
+		summarizeBy: none
+		sourceColumn: CalendarQuarter
+
+		annotation SummarizationSetBy = Automatic
+
+	column CalendarYear
+		dataType: int64
+		formatString: 0
+		lineageTag: 50220010-75a9-4bc9-85db-838c5f1a4762
+		summarizeBy: none
+		sourceColumn: CalendarYear
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Fiscal Year'
+		dataType: int64
+		formatString: 0
+		lineageTag: 3bcfb7ae-770c-405d-9b4a-944615727b68
+		summarizeBy: none
+		sourceColumn: Fiscal Year
+
+		annotation SummarizationSetBy = Automatic
+
+	column DayNumberOfMonth
+		dataType: int64
+		formatString: 0
+		lineageTag: 0f9e309c-d3da-4323-8492-f267f2d034b4
+		summarizeBy: none
+		sourceColumn: DayNumberOfMonth
+
+		annotation SummarizationSetBy = Automatic
+
+	column Period
+		dataType: int64
+		formatString: 0
+		lineageTag: 796eb36a-6cae-4680-99fa-c8f5778386c8
+		summarizeBy: none
+		sourceColumn: Period
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Month ID'
+		dataType: int64
+		formatString: 0
+		lineageTag: ab013389-d8e6-4703-bffd-06dece803658
+		summarizeBy: none
+		sourceColumn: Month ID
+
+		annotation SummarizationSetBy = Automatic
+
+	partition dim_Calendar-048b1ce6-bb5e-414e-9873-6a2e429cf581 = m
+		mode: import
+		source =
+				let
+				    Source = Excel.Workbook(Web.Contents("https://ibm-my.sharepoint.com/personal/rideb184_in_ibm_com/Documents/Desktop/Work%20In%20Progress/14.%20Service%20Line/Book-760/Sample%20Data/Adventure%20Works%202020.xlsx"), null, true),
+				    Calendar_Sheet = Source{[Item="Calendar",Kind="Sheet"]}[Data],
+				    #"Promoted Headers" = Table.PromoteHeaders(Calendar_Sheet, [PromoteAllScalars=true]),
+				    #"Changed Type" = Table.TransformColumnTypes(#"Promoted Headers",{{"ID", Int64.Type}, {"Date", type date}, {"DayNumberOfWeek", Int64.Type}, {"DayName", type text}, {"MonthName", type text}, {"MonthNumberOfYear", Int64.Type}, {"DayNumberOfYear", Int64.Type}, {"WeekNumberOfYear", Int64.Type}, {"CalendarQuarter", Int64.Type}, {"CalendarYear", Int64.Type}, {"Fiscal Year", Int64.Type}, {"FiscalSemester", Int64.Type}, {"FiscalQuarter", Int64.Type}, {"FinMonthNumberOfYear", Int64.Type}, {"DayNumberOfMonth", Int64.Type}, {"Period", Int64.Type}, {"Month ID", Int64.Type}}),
+				    #"Removed Columns" = Table.RemoveColumns(#"Changed Type",{"DayNumberOfYear", "FiscalSemester", "FiscalQuarter", "FinMonthNumberOfYear"})
+				in
+				    #"Removed Columns"
+
+	annotation PBI_ResultType = Table
+
+	annotation PBI_NavigationStepName = Navigation
+

@@ -1,0 +1,7 @@
+role 'US Users'
+	modelPermission: read
+
+	tablePermission dim_Territory = [Country] = "United States"
+
+	annotation PBI_Id = d0186c0185e24037a3bcdc39897b6f5e
+
