@@ -30,6 +30,11 @@ table MeasureTable
 			```
 		lineageTag: a70c8106-9ec5-4711-a442-f2105917ce59
 
+	measure Profit = SUMX(fact_Sales, fact_Sales[SalesAmount] - (fact_Sales[TotalProductCost] + fact_Sales[TaxAmt] + fact_Sales[Freight]))
+		lineageTag: 2ce7e597-bbe3-4584-bc01-289d884abbac
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
 	partition MeasureTable-42cffd3a-144e-44c3-be8c-bfd4abc06f30 = m
 		mode: import
 		source =
