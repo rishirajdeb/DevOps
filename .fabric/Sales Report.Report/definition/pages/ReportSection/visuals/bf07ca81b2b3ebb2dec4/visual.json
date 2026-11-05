@@ -1,5 +1,5 @@
 {
-  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.7.0/schema.json",
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.14.0/schema.json",
   "name": "bf07ca81b2b3ebb2dec4",
   "position": {
     "x": 377.5,
@@ -19,7 +19,7 @@
               {
                 "textRuns": [
                   {
-                    "value": "Sales Report ",
+                    "value": "Sales Summary",
                     "textStyle": {
                       "fontFamily": "Arial",
                       "fontSize": "32pt"
