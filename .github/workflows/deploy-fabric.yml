@@ -24,7 +24,7 @@ jobs:
             -d "grant_type=client_credentials" \
             -d "client_id=${{ secrets.AZURE_CLIENT_ID }}" \
             -d "client_secret=${{ secrets.AZURE_CLIENT_SECRET }}" \
-            -d "scope=https://analysis.windows.net/powerbi/api/.default" \
+            -d "scope=https://api.fabric.microsoft.com/.default" \
             "https://login.microsoftonline.com/${{ secrets.AZURE_TENANT_ID }}/oauth2/v2.0/token")
 
           ACCESS_TOKEN=$(echo $RESPONSE | jq -r '.access_token')
