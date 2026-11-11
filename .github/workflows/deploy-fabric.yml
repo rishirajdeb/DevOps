@@ -26,6 +26,17 @@ jobs:
           ACCESS_TOKEN=$(echo "$RESPONSE" | jq -r '.access_token')
           echo "ACCESS_TOKEN=$ACCESS_TOKEN" >> $GITHUB_ENV
 
+      - name: Configure Git Credentials
+        run: |
+          curl -i -X PATCH \
+            "https://api.fabric.microsoft.com/v1/workspaces/${{ secrets.WORKSPACE_ID }}/git/myGitCredentials" \
+            -H "Authorization: Bearer $ACCESS_TOKEN" \
+            -H "Content-Type: application/json" \
+            -d '{
+              "source": "ConfiguredConnection",
+              "connectionId": "6a5a85f8-7d1f-4078-84e8-bf71f62beed9"
+            }'
+            
       - name: Get Git Status
         run: |
           curl -s -X GET \
