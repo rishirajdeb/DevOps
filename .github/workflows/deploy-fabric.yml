@@ -63,5 +63,8 @@ jobs:
               \"conflictResolution\": {
                 \"conflictResolutionType\": \"Workspace\",
                 \"conflictResolutionPolicy\": \"PreferWorkspace\"
+              },
+              \"options\": {
+                \"allowOverrideItems\": true
               }
             }"
