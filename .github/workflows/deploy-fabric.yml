@@ -35,7 +35,7 @@ jobs:
       - name: Trigger Fabric Git Sync (Auto Apply)
         run: |
           curl -X POST \
-            "https://api.fabric.microsoft.com/v1/workspaces/{secrets.WORKSPACE_ID}/git/updateFromGit" \
+            "https://api.fabric.microsoft.com/v1/workspaces/${{secrets.WORKSPACE_ID}}/git/updateFromGit" \
             -H "Authorization: Bearer $ACCESS_TOKEN" \
             -H "Content-Type: application/json" \
             -d "{\"conflictResolution\":{\"conflictResolutionType\":\"Workspace\"}}"
