@@ -1,3 +1,4 @@
+
 name: Fabric CI/CD
 
 on:
@@ -6,17 +7,12 @@ on:
       - main
     paths:
       - '.fabric/**'
-      
+
 jobs:
   deploy:
     runs-on: ubuntu-latest
 
     steps:
-      # Checking out repo for the GitHub Action Runner
-      - name: Checkout repo
-        uses: actions/checkout@v4
-      
-      # Authentication
       - name: Get Access Token
         run: |
           RESPONSE=$(curl -s -X POST \
@@ -27,15 +23,34 @@ jobs:
             -d "scope=https://api.fabric.microsoft.com/.default" \
             "https://login.microsoftonline.com/${{ secrets.AZURE_TENANT_ID }}/oauth2/v2.0/token")
 
-          ACCESS_TOKEN=$(echo $RESPONSE | jq -r '.access_token')
-
+          ACCESS_TOKEN=$(echo "$RESPONSE" | jq -r '.access_token')
           echo "ACCESS_TOKEN=$ACCESS_TOKEN" >> $GITHUB_ENV
 
-      # Deployment
-      - name: Trigger Fabric Git Sync (Auto Apply)
+      - name: Get Git Status
         run: |
-          curl -X POST \
-            "https://api.fabric.microsoft.com/v1/workspaces/${{secrets.WORKSPACE_ID}}/git/updateFromGit" \
+          curl -s -X GET \
+            "https://api.fabric.microsoft.com/v1/workspaces/${{ secrets.WORKSPACE_ID }}/git/status" \
+            -H "Authorization: Bearer $ACCESS_TOKEN" \
+            -H "Content-Type: application/json"
+
+      - name: Update From Git
+        run: |
+          STATUS=$(curl -s -X GET \
+            "https://api.fabric.microsoft.com/v1/workspaces/${{ secrets.WORKSPACE_ID }}/git/status" \
+            -H "Authorization: Bearer $ACCESS_TOKEN")
+
+          REMOTE_HASH=$(echo "$STATUS" | jq -r '.remoteCommitHash')
+          WORKSPACE_HASH=$(echo "$STATUS" | jq -r '.workspaceHead')
+
+          curl -i -X POST \
+            "https://api.fabric.microsoft.com/v1/workspaces/${{ secrets.WORKSPACE_ID }}/git/updateFromGit" \
             -H "Authorization: Bearer $ACCESS_TOKEN" \
             -H "Content-Type: application/json" \
-            -d "{\"conflictResolution\":{\"conflictResolutionType\":\"Workspace\"}}"
+            -d "{
+              \"remoteCommitHash\": \"$REMOTE_HASH\",
+              \"workspaceHead\": \"$WORKSPACE_HASH\",
+              \"conflictResolution\": {
+                \"conflictResolutionType\": \"Workspace\",
+                \"conflictResolutionPolicy\": \"PreferWorkspace\"
+              }
+            }"
