@@ -821,46 +821,6 @@
               "objects": {}
             }
           },
-          "aeb6f2299a9b77795da2": {
-            "filters": {
-              "byExpr": [
-                {
-                  "name": "9fcb6bc3380a2425de79",
-                  "type": "Advanced",
-                  "expression": {
-                    "Measure": {
-                      "Expression": {
-                        "SourceRef": {
-                          "Entity": "MeasureTable"
-                        }
-                      },
-                      "Property": "YoY Growth%"
-                    }
-                  },
-                  "howCreated": 0
-                }
-              ]
-            },
-            "singleVisual": {
-              "visualType": "card",
-              "objects": {},
-              "orderBy": [
-                {
-                  "Direction": 2,
-                  "Expression": {
-                    "Measure": {
-                      "Expression": {
-                        "SourceRef": {
-                          "Entity": "MeasureTable"
-                        }
-                      },
-                      "Property": "YoY Growth%"
-                    }
-                  }
-                }
-              ]
-            }
-          },
           "1eea78b2143304f07010": {
             "filters": {
               "byExpr": [
